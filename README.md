@@ -1,6 +1,6 @@
 # ShadowPet 🐾
 
-ShadowPet is a web-based virtual pet application created using HTML, CSS, and JavaScript.
+An intelligent pet recommendation platform that matches users with the ideal pet based on their lifestyle, budget, and preferences, while providing detailed care guides, ownership costs, and local availability information.
 
 ## Features
 
