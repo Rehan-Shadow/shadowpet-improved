@@ -1,0 +1,1420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="ShadowPet helps you find a pet that fits your lifestyle, home, budget, and experience level." />
+  <title>ShadowPet | Find Your Perfect Pet</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    :root {
+      --forest: #174236;
+      --forest-2: #236451;
+      --leaf: #59a872;
+      --mint: #e9f6ed;
+      --cream: #fffaf1;
+      --paper: #ffffff;
+      --ink: #17211f;
+      --text: #3e4d49;
+      --muted: #74817c;
+      --line: #dbe7e1;
+      --gold: #f2a03b;
+      --rose: #d96060;
+      --blue: #3f7fbc;
+      --shadow: 0 18px 48px rgba(23, 66, 54, .12);
+      --soft-shadow: 0 10px 28px rgba(23, 66, 54, .09);
+      --radius: 8px;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--cream);
+      color: var(--ink);
+      overflow-x: hidden;
+    }
+
+    button, input { font: inherit; }
+    button { cursor: pointer; }
+    img { display: block; max-width: 100%; }
+    a { color: inherit; }
+
+    .skip-link {
+      position: absolute;
+      left: 16px;
+      top: -50px;
+      z-index: 50;
+      padding: 10px 14px;
+      background: var(--ink);
+      color: #fff;
+      border-radius: 6px;
+      text-decoration: none;
+    }
+    .skip-link:focus { top: 14px; }
+
+    .site-nav {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 0 clamp(18px, 4vw, 56px);
+      background: rgba(255, 250, 241, .92);
+      border-bottom: 1px solid rgba(219, 231, 225, .8);
+      backdrop-filter: blur(14px);
+    }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--forest);
+      text-decoration: none;
+      font-weight: 900;
+      letter-spacing: 0;
+    }
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 8px;
+      background:
+        radial-gradient(circle at 66% 29%, rgba(242, 160, 59, .9) 0 13%, transparent 14%),
+        linear-gradient(135deg, #102d25, var(--forest-2));
+      color: #fff;
+      box-shadow: 0 10px 22px rgba(23, 66, 54, .24);
+      position: relative;
+      overflow: hidden;
+    }
+    .brand-mark svg {
+      width: 27px;
+      height: 27px;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,.18));
+    }
+    .brand-name {
+      display: flex;
+      flex-direction: column;
+      line-height: .96;
+    }
+    .brand-name strong {
+      color: var(--forest);
+      font-size: 18px;
+      letter-spacing: .2px;
+    }
+    .brand-name small {
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: 1.6px;
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .nav-links a {
+      padding: 10px 12px;
+      color: var(--text);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 700;
+      border-radius: 6px;
+    }
+    .nav-links a:hover { background: var(--mint); color: var(--forest); }
+    .nav-cta {
+      border: 0;
+      border-radius: 7px;
+      background: var(--forest);
+      color: #fff;
+      padding: 11px 16px;
+      font-weight: 800;
+      box-shadow: 0 10px 24px rgba(23, 66, 54, .18);
+    }
+
+    .section {
+      padding: clamp(46px, 7vw, 88px) clamp(18px, 4vw, 56px);
+    }
+    .inner {
+      max-width: 1180px;
+      margin: 0 auto;
+    }
+
+    .hero {
+      min-height: calc(100vh - 68px);
+      display: grid;
+      grid-template-columns: minmax(0, 1.02fr) minmax(330px, .98fr);
+      align-items: center;
+      gap: clamp(28px, 5vw, 68px);
+      padding-top: clamp(38px, 5vw, 62px);
+      padding-bottom: clamp(34px, 5vw, 58px);
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 18px;
+      padding: 7px 10px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, .68);
+      color: var(--forest);
+      font-size: 13px;
+      font-weight: 800;
+    }
+    .hero h1 {
+      max-width: 760px;
+      margin: 0;
+      font-family: "Playfair Display", Georgia, serif;
+      font-size: clamp(44px, 6.3vw, 82px);
+      line-height: .98;
+      letter-spacing: 0;
+      color: var(--forest);
+    }
+    .hero-copy {
+      max-width: 630px;
+      margin: 22px 0 0;
+      color: var(--text);
+      font-size: clamp(16px, 1.8vw, 20px);
+      line-height: 1.7;
+    }
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 30px;
+    }
+    .primary-btn, .secondary-btn, .ghost-btn {
+      min-height: 46px;
+      border-radius: 7px;
+      padding: 12px 18px;
+      font-weight: 850;
+      border: 0;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
+    }
+    .primary-btn {
+      background: var(--gold);
+      color: #24150a;
+      box-shadow: 0 14px 30px rgba(242, 160, 59, .3);
+    }
+    .primary-btn:hover, .secondary-btn:hover, .ghost-btn:hover { transform: translateY(-2px); }
+    .secondary-btn {
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--forest);
+    }
+    .ghost-btn {
+      border: 1px solid rgba(255,255,255,.28);
+      background: rgba(255,255,255,.12);
+      color: #fff;
+    }
+    .trust-row {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      max-width: 620px;
+      margin-top: 34px;
+    }
+    .trust-card {
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, .68);
+    }
+    .trust-card strong {
+      display: block;
+      color: var(--forest);
+      font-size: 22px;
+      font-weight: 900;
+    }
+    .trust-card span {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .pet-board {
+      position: relative;
+      min-height: 580px;
+    }
+    .hero-photo {
+      position: absolute;
+      inset: 16px 0 98px 38px;
+      overflow: hidden;
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      background: #dbe7e1;
+    }
+    .hero-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .match-card {
+      position: absolute;
+      left: 0;
+      bottom: 34px;
+      width: min(420px, 90%);
+      padding: 18px;
+      border-radius: 8px;
+      background: #fff;
+      box-shadow: var(--shadow);
+    }
+    .match-card-top {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .pet-avatar {
+      width: 54px;
+      height: 54px;
+      display: grid;
+      place-items: center;
+      border-radius: 8px;
+      background: var(--mint);
+      color: var(--forest);
+      font-size: 28px;
+    }
+    .match-card h2 {
+      margin: 0 0 4px;
+      font-size: 18px;
+    }
+    .match-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+    .mini-bars {
+      display: grid;
+      gap: 10px;
+      margin-top: 16px;
+    }
+    .mini-bar {
+      display: grid;
+      grid-template-columns: 92px 1fr 34px;
+      align-items: center;
+      gap: 9px;
+      font-size: 12px;
+      color: var(--text);
+      font-weight: 800;
+    }
+    .bar-track {
+      height: 8px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: #eef4ef;
+    }
+    .bar-fill {
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--leaf), var(--gold));
+    }
+    .floating-note {
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 220px;
+      padding: 14px;
+      border-radius: 8px;
+      background: var(--forest);
+      color: #fff;
+      box-shadow: var(--soft-shadow);
+    }
+    .floating-note span {
+      display: block;
+      color: rgba(255,255,255,.68);
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      margin-bottom: 7px;
+    }
+    .floating-note strong {
+      display: block;
+      line-height: 1.35;
+    }
+
+    .section-head {
+      max-width: 740px;
+      margin-bottom: 28px;
+    }
+    .section-head h2 {
+      margin: 0;
+      color: var(--forest);
+      font-family: "Playfair Display", Georgia, serif;
+      font-size: clamp(30px, 4vw, 48px);
+      line-height: 1.08;
+    }
+    .section-head p {
+      margin: 12px 0 0;
+      color: var(--text);
+      line-height: 1.7;
+      font-size: 16px;
+    }
+
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .step-card, .pet-card, .quiz-panel, .result-panel, .shop-panel {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--paper);
+      box-shadow: var(--soft-shadow);
+    }
+    .step-card {
+      padding: 22px;
+    }
+    .step-num {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border-radius: 8px;
+      background: var(--forest);
+      color: #fff;
+      font-weight: 900;
+      margin-bottom: 18px;
+    }
+    .step-card h3, .pet-card h3 {
+      margin: 0 0 8px;
+      font-size: 17px;
+      color: var(--ink);
+    }
+    .step-card p, .pet-card p {
+      margin: 0;
+      color: var(--text);
+      line-height: 1.6;
+      font-size: 14px;
+    }
+
+    .pets-strip {
+      background: var(--forest);
+      color: #fff;
+    }
+    .pets-strip .section-head h2 { color: #fff; }
+    .pets-strip .section-head p { color: rgba(255,255,255,.72); }
+    .pet-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .pet-card {
+      overflow: hidden;
+      background: rgba(255,255,255,.08);
+      border-color: rgba(255,255,255,.16);
+      color: #fff;
+      box-shadow: none;
+    }
+    .pet-card img {
+      width: 100%;
+      height: 154px;
+      object-fit: cover;
+      background: rgba(255,255,255,.1);
+    }
+    .pet-card-body { padding: 16px; }
+    .pet-card h3 { color: #fff; }
+    .pet-card p { color: rgba(255,255,255,.72); }
+
+    .quiz-section {
+      background: #f5fbf7;
+    }
+    .quiz-layout {
+      display: grid;
+      grid-template-columns: minmax(0, .76fr) minmax(340px, 1fr);
+      gap: 22px;
+      align-items: start;
+    }
+    .quiz-panel {
+      padding: clamp(20px, 3vw, 30px);
+      position: sticky;
+      top: 88px;
+    }
+    .progress-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 850;
+      margin-bottom: 10px;
+    }
+    .progress {
+      height: 9px;
+      overflow: hidden;
+      background: #e3eee8;
+      border-radius: 999px;
+      margin-bottom: 26px;
+    }
+    .progress span {
+      display: block;
+      width: 0%;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--forest), var(--gold));
+      transition: width .28s ease;
+    }
+    .question-kicker {
+      color: var(--forest);
+      font-size: 13px;
+      font-weight: 900;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .question-title {
+      margin: 0 0 18px;
+      font-size: clamp(22px, 3vw, 32px);
+      line-height: 1.15;
+      color: var(--ink);
+    }
+    .options {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 11px;
+    }
+    .option {
+      min-height: 96px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      gap: 7px;
+      border: 2px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      color: var(--text);
+      padding: 15px;
+      text-align: left;
+      font-weight: 800;
+      transition: border .18s ease, background .18s ease, transform .18s ease;
+    }
+    .option:hover { border-color: var(--leaf); transform: translateY(-1px); }
+    .option.active {
+      border-color: var(--forest);
+      background: var(--mint);
+      color: var(--forest);
+    }
+    .option small {
+      display: block;
+      color: var(--muted);
+      font-weight: 650;
+      line-height: 1.45;
+    }
+    .quiz-actions {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      margin-top: 22px;
+    }
+    .quiz-actions button:disabled {
+      opacity: .45;
+      cursor: not-allowed;
+      transform: none;
+    }
+    .quiz-aside {
+      display: grid;
+      gap: 14px;
+    }
+    .aside-card {
+      padding: 20px;
+      border-radius: 8px;
+      background: #fff;
+      border: 1px solid var(--line);
+      box-shadow: var(--soft-shadow);
+    }
+    .aside-card h3 {
+      margin: 0 0 10px;
+      color: var(--forest);
+      font-size: 17px;
+    }
+    .aside-card p {
+      margin: 0;
+      color: var(--text);
+      line-height: 1.7;
+      font-size: 14px;
+    }
+
+    .result-panel {
+      display: none;
+      margin-top: 24px;
+      overflow: hidden;
+      background: #fff;
+    }
+    .result-panel.show { display: block; animation: rise .28s ease; }
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .result-hero {
+      display: grid;
+      grid-template-columns: minmax(0, .72fr) minmax(0, 1fr);
+      gap: 24px;
+      padding: clamp(20px, 3vw, 30px);
+      background: linear-gradient(135deg, var(--forest), var(--forest-2));
+      color: #fff;
+    }
+    .result-hero img {
+      height: 300px;
+      width: 100%;
+      object-fit: cover;
+      border-radius: 8px;
+      background: rgba(255,255,255,.08);
+    }
+    .match-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border-radius: 999px;
+      padding: 8px 11px;
+      background: rgba(255,255,255,.13);
+      color: rgba(255,255,255,.82);
+      font-size: 13px;
+      font-weight: 850;
+      margin-bottom: 16px;
+    }
+    .result-hero h3 {
+      margin: 0;
+      font-family: "Playfair Display", Georgia, serif;
+      font-size: clamp(34px, 5vw, 56px);
+      line-height: 1.02;
+      color: #fff;
+    }
+    .result-hero p {
+      margin: 14px 0 0;
+      color: rgba(255,255,255,.78);
+      line-height: 1.75;
+    }
+    .badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 18px;
+    }
+    .badge {
+      border-radius: 999px;
+      padding: 7px 10px;
+      background: rgba(255,255,255,.14);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 850;
+    }
+    .result-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      padding: clamp(20px, 3vw, 30px);
+    }
+    .info-box {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 16px;
+      background: #fff;
+    }
+    .info-box span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 850;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .info-box strong {
+      color: var(--ink);
+      line-height: 1.45;
+    }
+    .care-cost {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      padding: 0 clamp(20px, 3vw, 30px) clamp(20px, 3vw, 30px);
+    }
+    .check-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 10px;
+    }
+    .check-list li {
+      display: flex;
+      gap: 9px;
+      color: var(--text);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .check-list li::before {
+      content: "✓";
+      color: var(--leaf);
+      font-weight: 900;
+    }
+    .price-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 10px 0;
+      border-bottom: 1px solid #edf3ef;
+      color: var(--text);
+      font-size: 14px;
+    }
+    .price-row:last-child { border-bottom: 0; }
+    .price-row strong { color: var(--ink); }
+
+    .shop-panel {
+      padding: clamp(20px, 3vw, 30px);
+      margin-top: 18px;
+    }
+    .shop-form {
+      display: flex;
+      gap: 10px;
+      margin-top: 16px;
+    }
+    .shop-form input {
+      flex: 1;
+      min-width: 0;
+      border: 2px solid var(--line);
+      border-radius: 7px;
+      padding: 12px 13px;
+      background: #fff;
+      outline: none;
+    }
+    .shop-form input:focus { border-color: var(--leaf); }
+    .shop-results {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 18px;
+    }
+    .shop-card {
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+    }
+    .shop-card h4 {
+      margin: 0 0 7px;
+      color: var(--ink);
+    }
+    .shop-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.55;
+      font-size: 13px;
+    }
+    .shop-card a {
+      display: inline-flex;
+      margin-top: 12px;
+      color: var(--blue);
+      font-size: 13px;
+      font-weight: 850;
+      text-decoration: none;
+    }
+
+    .adoption {
+      background: #fff;
+    }
+    .adoption-layout {
+      display: grid;
+      grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
+      gap: clamp(22px, 4vw, 46px);
+      align-items: center;
+    }
+    .adoption-photo {
+      overflow: hidden;
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+    }
+    .adoption-photo img {
+      width: 100%;
+      height: 450px;
+      object-fit: cover;
+    }
+    .faq-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 22px;
+    }
+    details {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      padding: 16px;
+    }
+    summary {
+      cursor: pointer;
+      color: var(--forest);
+      font-weight: 900;
+    }
+    details p {
+      color: var(--text);
+      line-height: 1.7;
+      margin: 12px 0 0;
+    }
+
+    .final-cta {
+      padding: clamp(46px, 7vw, 78px) clamp(18px, 4vw, 56px);
+      background: var(--forest);
+      color: #fff;
+      text-align: center;
+    }
+    .final-cta h2 {
+      margin: 0;
+      font-family: "Playfair Display", Georgia, serif;
+      font-size: clamp(32px, 5vw, 56px);
+    }
+    .final-cta p {
+      max-width: 650px;
+      margin: 14px auto 24px;
+      color: rgba(255,255,255,.74);
+      line-height: 1.7;
+    }
+
+    footer {
+      padding: 24px clamp(18px, 4vw, 56px);
+      background: #102d25;
+      color: rgba(255,255,255,.72);
+      font-size: 13px;
+    }
+    footer .inner {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 940px) {
+      .nav-links { display: none; }
+      .hero,
+      .quiz-layout,
+      .result-hero,
+      .adoption-layout {
+        grid-template-columns: 1fr;
+      }
+      .pet-board {
+        min-height: 500px;
+      }
+      .hero-photo {
+        inset: 0 0 82px 0;
+      }
+      .floating-note { right: 16px; }
+      .steps-grid, .pet-grid, .result-grid, .shop-results {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .quiz-panel { position: static; }
+    }
+
+    @media (max-width: 620px) {
+      .site-nav { height: 62px; }
+      .brand-name { display: none; }
+      .nav-cta { padding-inline: 12px; }
+      .hero { min-height: auto; }
+      .trust-row,
+      .steps-grid,
+      .pet-grid,
+      .options,
+      .result-grid,
+      .care-cost,
+      .shop-results {
+        grid-template-columns: 1fr;
+      }
+      .pet-board { min-height: 460px; }
+      .floating-note {
+        width: auto;
+        left: 14px;
+        right: 14px;
+      }
+      .match-card {
+        width: calc(100% - 20px);
+        left: 10px;
+      }
+      .mini-bar {
+        grid-template-columns: 80px 1fr 32px;
+      }
+      .shop-form { flex-direction: column; }
+      .adoption-photo img { height: 310px; }
+    }
+      .credit {
+  text-align: center;
+  color: rgba(0, 51, 28, 0.72);
+  font-size: 13px;
+  font-weight: 900;
+  margin: px 0 0;
+}
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#quiz">Skip to quiz</a>
+  <nav class="site-nav" aria-label="Main navigation">
+    <a class="brand" href="#top" aria-label="ShadowPet home">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 48 48" role="img">
+          <path fill="#fffaf1" d="M18.8 9.2c2.5 0 4.5 2.6 4.5 5.8s-2 5.8-4.5 5.8-4.5-2.6-4.5-5.8 2-5.8 4.5-5.8Zm10.4 0c2.5 0 4.5 2.6 4.5 5.8s-2 5.8-4.5 5.8-4.5-2.6-4.5-5.8 2-5.8 4.5-5.8ZM10.8 19.4c2.3-.6 4.8 1.4 5.6 4.4.8 3-.4 5.9-2.7 6.5-2.3.6-4.8-1.4-5.6-4.4-.8-3 .4-5.9 2.7-6.5Zm26.4 0c2.3.6 3.5 3.5 2.7 6.5-.8 3-3.3 5-5.6 4.4-2.3-.6-3.5-3.5-2.7-6.5.8-3 3.3-5 5.6-4.4ZM24 23.4c5.2 0 10.9 6.1 10.9 11.2 0 3.2-2.5 5.2-5.4 4.4-1.7-.5-3.4-1.1-5.5-1.1s-3.8.6-5.5 1.1c-2.9.8-5.4-1.2-5.4-4.4 0-5.1 5.7-11.2 10.9-11.2Z"/>
+        </svg>
+      </span>
+      <span class="brand-name"><strong>ShadowPet</strong><small>Matchmaker</small></span>
+    </a>
+    <div class="nav-links" aria-label="Page sections">
+      <a href="#how">How it works</a>
+      <a href="#pets">Pet types</a>
+      <a href="#quiz">Quiz</a>
+      <a href="#adoption">Adoption guide</a>
+    </div>
+    <button class="nav-cta" type="button" onclick="jumpToQuiz()">Start quiz</button>
+  </nav>
+
+  <main id="top">
+    <section class="section hero inner" aria-labelledby="hero-title">
+      <div>
+        <div class="eyebrow">Smart lifestyle matching for first-time and experienced pet parents</div>
+        <h1 id="hero-title">Find the pet that actually fits your life.</h1>
+        <p class="hero-copy">Answer a short quiz and get a practical recommendation with care needs, costs, space requirements, adoption tips, and nearby shop search links.</p>
+        <div class="hero-actions">
+          <button class="primary-btn" type="button" onclick="jumpToQuiz()">Find my match <span aria-hidden="true">→</span></button>
+          <a class="secondary-btn" href="#adoption">Read adoption checklist</a>
+        </div>
+        <div class="trust-row" aria-label="Website highlights">
+          <div class="trust-card"><strong>2 min</strong><span>Quiz time</span></div>
+          <div class="trust-card"><strong>10</strong><span>Pet profiles</span></div>
+          <div class="trust-card"><strong>Free</strong><span>No signup</span></div>
+        </div>
+      </div>
+
+      <div class="pet-board" aria-label="Featured pet preview">
+        <div class="hero-photo">
+          <img src="https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&w=1100&q=80" alt="Two happy dogs sitting together outdoors" />
+        </div>
+        <div class="floating-note">
+          <span>Better decisions</span>
+          <strong>Match score considers time, budget, home space, allergies, noise, travel, and experience.</strong>
+        </div>
+        <div class="match-card">
+          <div class="match-card-top">
+            <div class="pet-avatar">🐶</div>
+            <div>
+              <h2>Example match: Small dog</h2>
+              <p>Apartment-friendly, social, trainable, and great for daily routines.</p>
+            </div>
+          </div>
+          <div class="mini-bars" aria-label="Example pet traits">
+            <div class="mini-bar"><span>Affection</span><div class="bar-track"><div class="bar-fill" style="width:92%"></div></div><span>92</span></div>
+            <div class="mini-bar"><span>Space</span><div class="bar-track"><div class="bar-fill" style="width:42%"></div></div><span>42</span></div>
+            <div class="mini-bar"><span>Care</span><div class="bar-track"><div class="bar-fill" style="width:74%"></div></div><span>74</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="how">
+      <div class="inner">
+        <div class="section-head">
+          <h2>A cleaner way to choose a pet.</h2>
+          <p>Instead of guessing from cuteness alone, ShadowPet turns your daily routine into a practical shortlist.</p>
+        </div>
+        <div class="steps-grid">
+          <article class="step-card">
+            <div class="step-num">1</div>
+            <h3>Answer lifestyle questions</h3>
+            <p>Tell us about your home, schedule, travel, budget, and comfort with training.</p>
+          </article>
+          <article class="step-card">
+            <div class="step-num">2</div>
+            <h3>Score each pet type</h3>
+            <p>The quiz compares your answers with care needs, noise, space, and handling level.</p>
+          </article>
+          <article class="step-card">
+            <div class="step-num">3</div>
+            <h3>Get a full profile</h3>
+            <p>See personality traits, monthly cost, daily care, setup needs, and lifespan.</p>
+          </article>
+          <article class="step-card">
+            <div class="step-num">4</div>
+            <h3>Plan the next step</h3>
+            <p>Use the adoption checklist and shop finder to prepare before bringing a pet home.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section pets-strip" id="pets">
+      <div class="inner">
+        <div class="section-head">
+          <h2>Compare different companion styles.</h2>
+          <p>From social dogs to calm fish tanks, the site helps you understand the tradeoffs before you commit.</p>
+        </div>
+        <div class="pet-grid">
+          <article class="pet-card">
+            <img src="https://images.unsplash.com/photo-1517849845537-4d257902454a?auto=format&fit=crop&w=700&q=80" alt="Dog looking at camera" />
+            <div class="pet-card-body"><h3>Dogs</h3><p>High affection, daily walks, regular training, strong routine needs.</p></div>
+          </article>
+          <article class="pet-card">
+            <img src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&w=700&q=80" alt="Cat resting on a sofa" />
+            <div class="pet-card-body"><h3>Cats</h3><p>Independent, clean, playful, and great for quieter homes.</p></div>
+          </article>
+          <article class="pet-card">
+            <img src="https://images.unsplash.com/photo-1585110396000-c9ffd4e4b308?auto=format&fit=crop&w=700&q=80" alt="Rabbit sitting in grass" />
+            <div class="pet-card-body"><h3>Rabbits</h3><p>Gentle, quiet, social, and happiest with safe floor space.</p></div>
+          </article>
+          <article class="pet-card">
+            <img src="https://images.unsplash.com/photo-1522069169874-c58ec4b76be5?auto=format&fit=crop&w=700&q=80" alt="Colorful fish in an aquarium" />
+            <div class="pet-card-body"><h3>Fish</h3><p>Low noise, peaceful visuals, and water-quality responsibility.</p></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section quiz-section" id="quiz">
+      <div class="inner">
+        <div class="section-head">
+          <h2>Take the pet match quiz.</h2>
+          <p>Choose the answer that is closest to your real life. Honest answers create a better recommendation.</p>
+        </div>
+        <div class="quiz-layout">
+          <section class="quiz-panel" aria-live="polite">
+            <div class="progress-meta">
+              <span id="questionCount">Question 1 of 8</span>
+              <span id="progressPercent">0%</span>
+            </div>
+            <div class="progress" aria-hidden="true"><span id="progressBar"></span></div>
+            <div class="question-kicker" id="questionKicker">Home setup</div>
+            <h2 class="question-title" id="questionTitle"></h2>
+            <div class="options" id="optionList"></div>
+            <div class="quiz-actions">
+              <button class="secondary-btn" type="button" id="backBtn" onclick="previousQuestion()">Back</button>
+              <button class="primary-btn" type="button" id="nextBtn" onclick="nextQuestion()">Next</button>
+            </div>
+          </section>
+
+          <aside class="quiz-aside" aria-label="Quiz guidance">
+            <div class="aside-card">
+              <h3>Why this works</h3>
+              <p>Good pet ownership is mostly fit: time, space, noise tolerance, budget, allergies, and the kind of relationship you want.</p>
+            </div>
+            <div class="aside-card">
+              <h3>After the result</h3>
+              <p>You will get the best match plus practical care notes, expected costs, starter shopping list, and alternatives.</p>
+            </div>
+            <div class="aside-card">
+              <h3>Important note</h3>
+              <p>Always confirm local rules, adoption requirements, and vet availability before buying or adopting any animal.</p>
+            </div>
+          </aside>
+        </div>
+
+        <section class="result-panel" id="resultPanel" aria-live="polite"></section>
+        <section class="shop-panel" id="shopPanel">
+          <div class="section-head" style="margin-bottom:0">
+            <h2 style="font-size:clamp(26px,3vw,38px)">Find nearby pet shops.</h2>
+            <p>Enter your city or area to open useful Google Maps searches for supplies, vets, adoption centres, and pet shops.</p>
+          </div>
+          <form class="shop-form" onsubmit="searchShops(event)">
+            <input id="cityInput" type="text" placeholder="Type your city or area, for example Mumbai" autocomplete="address-level2" />
+            <button class="primary-btn" type="submit">Search</button>
+          </form>
+          <div class="shop-results" id="shopResults"></div>
+        </section>
+      </div>
+    </section>
+
+    <section class="section adoption" id="adoption">
+      <div class="inner adoption-layout">
+        <div class="adoption-photo">
+          <img src="https://images.unsplash.com/photo-1601758124510-52d02ddb7cbd?auto=format&fit=crop&w=1000&q=80" alt="Person holding a dog during an adoption visit" />
+        </div>
+        <div>
+          <div class="section-head">
+            <h2>Before you bring a pet home.</h2>
+            <p>A beautiful website is nice. A prepared home is better. Use this quick checklist before you make the decision final.</p>
+          </div>
+          <div class="faq-list">
+            <details open>
+              <summary>Check your time honestly</summary>
+              <p>Feeding, cleaning, play, training, grooming, and vet visits add up. Pick a pet that fits your normal weekday, not your most optimistic weekend.</p>
+            </details>
+            <details>
+              <summary>Budget for care, not only purchase</summary>
+              <p>Food, bedding, toys, vaccines, grooming, emergency vet visits, and boarding can cost more than the initial adoption or purchase fee.</p>
+            </details>
+            <details>
+              <summary>Find a vet before you need one</summary>
+              <p>For birds, reptiles, rabbits, guinea pigs, and fish, look for species-specific vet support before bringing the animal home.</p>
+            </details>
+            <details>
+              <summary>Adopt when possible</summary>
+              <p>Check shelters, rescues, and verified adoption groups. If buying, choose ethical, transparent breeders and avoid impulse purchases.</p>
+            </details>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="final-cta">
+      <div class="inner">
+        <h2>Ready to meet your best match?</h2>
+        <p>The quiz is short, but the result is built to be useful: what to buy, what to expect, and what to think twice about.</p>
+        <button class="primary-btn" type="button" onclick="jumpToQuiz()">Start the quiz</button>
+      </div>
+    </section>
+  </main>
+  <p class="credit">Created by Rehan-Shadow</p>
+
+  <footer>
+    <div class="inner">
+      <span>ShadowPet | Lifestyle-first pet matching</span>
+      <span>Educational guidance only. Confirm local laws and vet advice.</span>
+    </div>
+  </footer>
+
+  <script>
+    const questions = [
+      {
+        key: "home",
+        kicker: "Home setup",
+        title: "What kind of home space do you have?",
+        options: [
+          { label: "Small apartment", note: "Limited floor space, shared walls", value: "small" },
+          { label: "Medium apartment", note: "Some room for toys and supplies", value: "medium" },
+          { label: "House with balcony", note: "More storage and play space", value: "large" },
+          { label: "House with yard", note: "Outdoor area available", value: "yard" }
+        ]
+      },
+      {
+        key: "time",
+        kicker: "Daily routine",
+        title: "How much active care time can you give daily?",
+        options: [
+          { label: "15 minutes", note: "I need very low-maintenance care", value: "low" },
+          { label: "30 to 45 minutes", note: "I can handle light routines", value: "medium" },
+          { label: "1 to 2 hours", note: "Walks, play, and training are fine", value: "high" },
+          { label: "Very flexible", note: "I can build my day around a pet", value: "very-high" }
+        ]
+      },
+      {
+        key: "social",
+        kicker: "Companion style",
+        title: "What relationship do you want with your pet?",
+        options: [
+          { label: "Very affectionate", note: "I want cuddles and interaction", value: "cuddly" },
+          { label: "Playful companion", note: "Fun and bonding, but not constant", value: "playful" },
+          { label: "Calm presence", note: "Peaceful, quiet company", value: "calm" },
+          { label: "Mostly observational", note: "I enjoy watching and caring", value: "observe" }
+        ]
+      },
+      {
+        key: "noise",
+        kicker: "Noise level",
+        title: "How much noise can your home handle?",
+        options: [
+          { label: "Almost none", note: "Thin walls or sensitive family", value: "silent" },
+          { label: "Low noise", note: "Some sounds are okay", value: "low" },
+          { label: "Moderate noise", note: "Normal pet sounds are fine", value: "medium" },
+          { label: "Noise is okay", note: "Barks or chirps are manageable", value: "high" }
+        ]
+      },
+      {
+        key: "budget",
+        kicker: "Budget",
+        title: "What monthly care budget feels realistic?",
+        options: [
+          { label: "Under Rs. 1,000", note: "Keep costs very controlled", value: "low" },
+          { label: "Rs. 1,000 to 3,000", note: "Comfortable basic care", value: "medium" },
+          { label: "Rs. 3,000 to 7,000", note: "Food, grooming, and vet buffer", value: "high" },
+          { label: "Rs. 7,000+", note: "I can support higher needs", value: "premium" }
+        ]
+      },
+      {
+        key: "travel",
+        kicker: "Travel",
+        title: "How often are you away overnight?",
+        options: [
+          { label: "Rarely", note: "I am usually home", value: "rare" },
+          { label: "Sometimes", note: "A few trips each month", value: "sometimes" },
+          { label: "Often", note: "I need care to be flexible", value: "often" },
+          { label: "Very often", note: "I need easy backup care", value: "very-often" }
+        ]
+      },
+      {
+        key: "allergy",
+        kicker: "Health fit",
+        title: "Are allergies or fur cleanup a concern?",
+        options: [
+          { label: "Yes, a big concern", note: "Prefer low fur or contained pets", value: "high" },
+          { label: "Some concern", note: "Manageable with cleaning", value: "medium" },
+          { label: "Not much", note: "Fur is okay", value: "low" },
+          { label: "No concern", note: "Any coat type is fine", value: "none" }
+        ]
+      },
+      {
+        key: "experience",
+        kicker: "Experience",
+        title: "How experienced are you with pets?",
+        options: [
+          { label: "First pet", note: "I want a forgiving beginner choice", value: "new" },
+          { label: "Some experience", note: "I know basic care", value: "some" },
+          { label: "Confident owner", note: "Training and care routines are fine", value: "confident" },
+          { label: "Specialist interest", note: "I can research complex care", value: "specialist" }
+        ]
+      }
+    ];
+
+    const pets = [
+      {
+        id: "smallDog",
+        name: "Small Dog",
+        image: "https://images.unsplash.com/photo-1587300003388-59208cc962cb?auto=format&fit=crop&w=900&q=80",
+        tagline: "Social, trainable, and great for people who enjoy daily routines.",
+        badges: ["Affectionate", "Trainable", "Apartment possible"],
+        setup: "Bed, bowls, collar, leash, toys, grooming kit, puppy pads if needed",
+        lifespan: "12 to 16 years",
+        monthly: "Rs. 3,000 to 9,000",
+        care: ["Walk or active play every day", "Positive reinforcement training", "Regular grooming and nail trimming", "Vaccinations and parasite prevention"],
+        scores: { home: { small: 9, medium: 10, large: 10, yard: 10 }, time: { low: 4, medium: 7, high: 10, "very-high": 10 }, social: { cuddly: 10, playful: 9, calm: 6, observe: 3 }, noise: { silent: 4, low: 6, medium: 8, high: 10 }, budget: { low: 3, medium: 6, high: 9, premium: 10 }, travel: { rare: 10, sometimes: 7, often: 4, "very-often": 2 }, allergy: { high: 4, medium: 6, low: 8, none: 10 }, experience: { new: 8, some: 10, confident: 10, specialist: 8 } }
+      },
+      {
+        id: "cat",
+        name: "Cat",
+        image: "https://images.unsplash.com/photo-1573865526739-10659fec78a5?auto=format&fit=crop&w=900&q=80",
+        tagline: "Independent, affectionate on their terms, and well-suited to indoor life.",
+        badges: ["Quiet", "Independent", "Indoor friendly"],
+        setup: "Litter box, scratcher, carrier, food bowls, toys, climbing perch",
+        lifespan: "12 to 18 years",
+        monthly: "Rs. 2,000 to 6,000",
+        care: ["Scoop litter daily", "Play in short sessions", "Provide scratching and climbing areas", "Annual vet checkups"],
+        scores: { home: { small: 10, medium: 10, large: 9, yard: 8 }, time: { low: 7, medium: 10, high: 9, "very-high": 8 }, social: { cuddly: 7, playful: 9, calm: 9, observe: 6 }, noise: { silent: 8, low: 10, medium: 10, high: 8 }, budget: { low: 6, medium: 9, high: 10, premium: 10 }, travel: { rare: 9, sometimes: 8, often: 6, "very-often": 4 }, allergy: { high: 2, medium: 5, low: 8, none: 10 }, experience: { new: 9, some: 10, confident: 9, specialist: 7 } }
+      },
+      {
+        id: "rabbit",
+        name: "Rabbit",
+        image: "https://images.unsplash.com/photo-1585110396000-c9ffd4e4b308?auto=format&fit=crop&w=900&q=80",
+        tagline: "Quiet and gentle, but needs space, patience, and careful handling.",
+        badges: ["Quiet", "Gentle", "Litter trainable"],
+        setup: "Large pen, hay rack, litter tray, chew toys, hiding box, nail clippers",
+        lifespan: "8 to 12 years",
+        monthly: "Rs. 1,500 to 5,000",
+        care: ["Unlimited hay and fresh water", "Daily floor exercise", "Safe chew items", "Exotic vet access"],
+        scores: { home: { small: 6, medium: 8, large: 10, yard: 9 }, time: { low: 5, medium: 8, high: 10, "very-high": 9 }, social: { cuddly: 6, playful: 7, calm: 10, observe: 7 }, noise: { silent: 10, low: 10, medium: 9, high: 8 }, budget: { low: 5, medium: 8, high: 10, premium: 10 }, travel: { rare: 9, sometimes: 7, often: 4, "very-often": 2 }, allergy: { high: 4, medium: 6, low: 8, none: 9 }, experience: { new: 6, some: 8, confident: 10, specialist: 9 } }
+      },
+      {
+        id: "fish",
+        name: "Freshwater Fish",
+        image: "https://images.unsplash.com/photo-1522069169874-c58ec4b76be5?auto=format&fit=crop&w=900&q=80",
+        tagline: "Peaceful and beautiful, with care focused on water quality.",
+        badges: ["Silent", "Low allergy", "Calming"],
+        setup: "Tank, filter, heater if needed, water conditioner, test kit, decor",
+        lifespan: "2 to 10+ years depending on species",
+        monthly: "Rs. 500 to 2,500",
+        care: ["Test water weekly", "Partial water changes", "Avoid overfeeding", "Maintain filter and temperature"],
+        scores: { home: { small: 9, medium: 10, large: 10, yard: 9 }, time: { low: 8, medium: 10, high: 8, "very-high": 7 }, social: { cuddly: 1, playful: 3, calm: 8, observe: 10 }, noise: { silent: 10, low: 10, medium: 10, high: 10 }, budget: { low: 8, medium: 10, high: 10, premium: 9 }, travel: { rare: 8, sometimes: 9, often: 7, "very-often": 5 }, allergy: { high: 10, medium: 10, low: 10, none: 10 }, experience: { new: 7, some: 9, confident: 10, specialist: 10 } }
+      },
+      {
+        id: "hamster",
+        name: "Hamster",
+        image: "https://images.unsplash.com/photo-1425082661705-1834bfd09dca?auto=format&fit=crop&w=900&q=80",
+        tagline: "Tiny, quiet, and best for people who enjoy evening observation.",
+        badges: ["Compact", "Quiet", "Budget friendly"],
+        setup: "Large cage, deep bedding, wheel, hideouts, chew toys, sand bath",
+        lifespan: "2 to 3 years",
+        monthly: "Rs. 600 to 1,800",
+        care: ["Refresh food and water", "Spot-clean bedding", "Handle gently at dusk", "Provide enrichment and deep bedding"],
+        scores: { home: { small: 10, medium: 10, large: 9, yard: 8 }, time: { low: 8, medium: 10, high: 7, "very-high": 6 }, social: { cuddly: 3, playful: 6, calm: 8, observe: 9 }, noise: { silent: 9, low: 10, medium: 10, high: 9 }, budget: { low: 10, medium: 10, high: 9, premium: 8 }, travel: { rare: 8, sometimes: 8, often: 6, "very-often": 4 }, allergy: { high: 6, medium: 7, low: 9, none: 10 }, experience: { new: 8, some: 9, confident: 8, specialist: 7 } }
+      },
+      {
+        id: "parrot",
+        name: "Parrot",
+        image: "https://images.unsplash.com/photo-1552728089-57bdde30beb3?auto=format&fit=crop&w=900&q=80",
+        tagline: "Intelligent, social, and expressive, but not a low-effort pet.",
+        badges: ["Smart", "Interactive", "Long-lived"],
+        setup: "Large cage, perches, toys, fresh diet, safe out-of-cage area",
+        lifespan: "10 to 50+ years depending on species",
+        monthly: "Rs. 2,500 to 8,000",
+        care: ["Daily interaction and enrichment", "Fresh vegetables and balanced food", "Cage cleaning", "Avian vet support"],
+        scores: { home: { small: 5, medium: 7, large: 9, yard: 8 }, time: { low: 1, medium: 4, high: 8, "very-high": 10 }, social: { cuddly: 7, playful: 10, calm: 4, observe: 7 }, noise: { silent: 1, low: 2, medium: 5, high: 10 }, budget: { low: 2, medium: 5, high: 8, premium: 10 }, travel: { rare: 10, sometimes: 5, often: 2, "very-often": 1 }, allergy: { high: 5, medium: 6, low: 8, none: 9 }, experience: { new: 2, some: 5, confident: 8, specialist: 10 } }
+      },
+      {
+        id: "guineaPig",
+        name: "Guinea Pig",
+        image: "https://images.unsplash.com/photo-1612267168669-679c961c5b31?auto=format&fit=crop&w=900&q=80",
+        tagline: "Social, vocal, gentle, and happiest in pairs with daily fresh food.",
+        badges: ["Gentle", "Social", "Family friendly"],
+        setup: "Large cage, hay, water bottle, hideouts, bedding, vitamin C foods",
+        lifespan: "4 to 8 years",
+        monthly: "Rs. 1,500 to 4,500",
+        care: ["Fresh hay and vegetables", "Vitamin C every day", "Clean bedding often", "Gentle handling and pair bonding"],
+        scores: { home: { small: 6, medium: 8, large: 10, yard: 8 }, time: { low: 5, medium: 9, high: 10, "very-high": 9 }, social: { cuddly: 7, playful: 7, calm: 9, observe: 7 }, noise: { silent: 7, low: 9, medium: 10, high: 8 }, budget: { low: 5, medium: 8, high: 10, premium: 10 }, travel: { rare: 9, sometimes: 7, often: 4, "very-often": 2 }, allergy: { high: 4, medium: 6, low: 8, none: 9 }, experience: { new: 7, some: 9, confident: 10, specialist: 9 } }
+      },
+      {
+        id: "turtle",
+        name: "Aquatic Turtle",
+        image: "https://images.unsplash.com/photo-1551189014-fe516aed0e9e?auto=format&fit=crop&w=900&q=80",
+        tagline: "Long-lived and fascinating, with demanding tank and lighting needs.",
+        badges: ["Long-lived", "Observational", "Special setup"],
+        setup: "Large tank, basking platform, UVB light, heat lamp, strong filter",
+        lifespan: "20 to 40+ years",
+        monthly: "Rs. 1,500 to 5,000",
+        care: ["Maintain water quality", "Provide UVB and basking heat", "Species-appropriate diet", "Plan for adult tank size"],
+        scores: { home: { small: 4, medium: 7, large: 10, yard: 9 }, time: { low: 5, medium: 8, high: 9, "very-high": 8 }, social: { cuddly: 1, playful: 3, calm: 8, observe: 10 }, noise: { silent: 10, low: 10, medium: 10, high: 9 }, budget: { low: 3, medium: 7, high: 9, premium: 10 }, travel: { rare: 8, sometimes: 7, often: 5, "very-often": 3 }, allergy: { high: 10, medium: 10, low: 10, none: 10 }, experience: { new: 3, some: 6, confident: 8, specialist: 10 } }
+      }
+    ];
+
+    let index = 0;
+    let answers = {};
+    let rankedPets = [];
+    let currentPet = null;
+
+    function jumpToQuiz() {
+      document.getElementById("quiz").scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    function renderQuestion() {
+      const q = questions[index];
+      const answered = answers[q.key];
+      const percent = Math.round((index / questions.length) * 100);
+      document.getElementById("questionCount").textContent = `Question ${index + 1} of ${questions.length}`;
+      document.getElementById("progressPercent").textContent = `${percent}%`;
+      document.getElementById("progressBar").style.width = `${percent}%`;
+      document.getElementById("questionKicker").textContent = q.kicker;
+      document.getElementById("questionTitle").textContent = q.title;
+      document.getElementById("optionList").innerHTML = q.options.map(option => `
+        <button class="option ${answered === option.value ? "active" : ""}" type="button" onclick="selectOption('${q.key}', '${option.value}')">
+          <span>${option.label}</span>
+          <small>${option.note}</small>
+        </button>
+      `).join("");
+      document.getElementById("backBtn").disabled = index === 0;
+      document.getElementById("nextBtn").disabled = !answered;
+      document.getElementById("nextBtn").innerHTML = index === questions.length - 1 ? "Show my result <span aria-hidden='true'>→</span>" : "Next";
+    }
+
+    function selectOption(key, value) {
+      answers[key] = value;
+      renderQuestion();
+    }
+
+    function nextQuestion() {
+      const q = questions[index];
+      if (!answers[q.key]) return;
+      if (index < questions.length - 1) {
+        index += 1;
+        renderQuestion();
+        return;
+      }
+      showResult();
+    }
+
+    function previousQuestion() {
+      if (index > 0) {
+        index -= 1;
+        renderQuestion();
+      }
+    }
+
+    function calculateScore(pet) {
+      const total = questions.reduce((sum, q) => {
+        const answer = answers[q.key];
+        return sum + (pet.scores[q.key][answer] || 0);
+      }, 0);
+      return Math.round((total / (questions.length * 10)) * 100);
+    }
+
+    function showResult() {
+      rankedPets = pets
+        .map(pet => ({ ...pet, score: calculateScore(pet) }))
+        .sort((a, b) => b.score - a.score);
+      currentPet = rankedPets[0];
+      renderResult();
+      const panel = document.getElementById("resultPanel");
+      panel.classList.add("show");
+      document.getElementById("progressPercent").textContent = "100%";
+      document.getElementById("progressBar").style.width = "100%";
+      panel.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    function renderResult() {
+      const alternatives = rankedPets.slice(1, 4);
+      document.getElementById("resultPanel").innerHTML = `
+        <div class="result-hero">
+          <img src="${currentPet.image}" alt="${currentPet.name}" />
+          <div>
+            <div class="match-pill">Lifestyle match: ${currentPet.score}%</div>
+            <h3>${currentPet.name}</h3>
+            <p>${currentPet.tagline}</p>
+            <div class="badges">${currentPet.badges.map(badge => `<span class="badge">${badge}</span>`).join("")}</div>
+            <div class="hero-actions">
+              <button class="ghost-btn" type="button" onclick="resetQuiz()">Retake quiz</button>
+              <button class="primary-btn" type="button" onclick="document.getElementById('shopPanel').scrollIntoView({behavior:'smooth'})">Find shops</button>
+            </div>
+          </div>
+        </div>
+        <div class="result-grid">
+          <div class="info-box"><span>Lifespan</span><strong>${currentPet.lifespan}</strong></div>
+          <div class="info-box"><span>Monthly cost</span><strong>${currentPet.monthly}</strong></div>
+          <div class="info-box"><span>Starter setup</span><strong>${currentPet.setup}</strong></div>
+        </div>
+        <div class="care-cost">
+          <div class="info-box">
+            <span>Daily and weekly care</span>
+            <ul class="check-list">${currentPet.care.map(item => `<li>${item}</li>`).join("")}</ul>
+          </div>
+          <div class="info-box">
+            <span>Your next best matches</span>
+            ${alternatives.map((pet, petIndex) => `
+              <div class="price-row">
+                <span>${petIndex + 2}. ${pet.name}</span>
+                <strong>${pet.score}%</strong>
+              </div>
+            `).join("")}
+          </div>
+        </div>
+      `;
+    }
+
+    function resetQuiz() {
+      index = 0;
+      answers = {};
+      rankedPets = [];
+      currentPet = null;
+      document.getElementById("resultPanel").classList.remove("show");
+      renderQuestion();
+      jumpToQuiz();
+    }
+
+    function searchShops(event) {
+      event.preventDefault();
+      const city = document.getElementById("cityInput").value.trim();
+      if (!city) {
+        document.getElementById("cityInput").focus();
+        return;
+      }
+      const petName = currentPet ? currentPet.name : "pet";
+      const queries = [
+        { title: "Pet shops", query: `pet shop ${city}` },
+        { title: `${petName} supplies`, query: `${petName} supplies ${city}` },
+        { title: "Veterinary clinics", query: `veterinary clinic ${city}` }
+      ];
+      document.getElementById("shopResults").innerHTML = queries.map(item => `
+        <article class="shop-card">
+          <h4>${item.title}</h4>
+          <p>Open live Google Maps results near ${city}. Check ratings, hours, stock, and call before visiting.</p>
+          <a target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(item.query)}">Open in Maps →</a>
+        </article>
+      `).join("");
+    }
+
+    renderQuestion();
+  </script>
+</body>
+</html>
